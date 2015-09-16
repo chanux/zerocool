@@ -1,0 +1,7 @@
+This is meant to be fucking awesome!
+
+But we'll soon get to know what happens.
+
+	Tab works?
+
+Just my attempt to copy `nc z.ero.cool 1337` 
