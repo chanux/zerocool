@@ -47,6 +47,7 @@ func handleConnection(conn net.Conn) {
 	reader := bufio.NewReader(f)
 
 	for {
+		//Well.. ASCII only.
 		char, err := reader.ReadByte()
 		if err != nil {
 			break
