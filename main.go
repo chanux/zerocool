@@ -38,9 +38,6 @@ func main() {
 }
 
 func handleConnection(conn net.Conn) {
-	//msg := "It's working\n And yes"
-	fmt.Println("A client starts reading")
-
 	f, err := os.Open(file)
 	if err != nil {
 		fmt.Println("Error opening file: ", err)
@@ -55,11 +52,9 @@ func handleConnection(conn net.Conn) {
 			break
 		}
 
-		//conn.Write([]byte(string(each)))
 		conn.Write([]byte{char})
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 
-	fmt.Println("One client finishes reading")
 	conn.Close()
 }
