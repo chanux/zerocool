@@ -1,7 +1,25 @@
-This is meant to be fucking awesome!
+                      ``````
+                `./syhddddddhys/.`
+             `-sdNmy+/:....:/+ymNds-`
+            :dNd+-   ``.....`   -+dNd:
+          `yMd:   .:++ooooooo+:.   :dMy`
+         .dMs`  .+ooo+:----:+ooo+.  `sMd.
+         dMs   .////.        ./ooo:   sMd
+        /Mm`                   :ooo.  `mM/
+        oMy                     ooo/   yMo
+        oMy                    `ooo:   yMo
+        /Mm`                  `/ooo.  `mM/
+         dMs   .////-`      `-+oo+-   sMd
+         .dMs`  ./ooo+/::::/+ooo/`  `sMd.
+          `yMd:   .:/+oooooo+/-`   :dMy`
+            :dNd+-   ```..```   -+dNd:
+             `-sdNmy+/:....:/+ymNds-`
+                `./syhddddddhys/.`
+                      ``````
+Hi I'm Chanux!
 
-But we'll soon get to know what happens.
+I built this because I was excited by now defunct `nc z.ero.cool 1337`
 
-	Tab works?
+It's just a simple go program you can find on my gists[1]
 
-Just my attempt to copy `nc z.ero.cool 1337` 
+[1] https://gist.github.com/chanux/7eeed4b1254c1803b642
