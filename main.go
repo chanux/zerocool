@@ -1,11 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
+	"io/ioutil"
+	"math/rand"
 	"net"
-	"os"
+	"strings"
 	"time"
 )
 
@@ -38,24 +39,30 @@ func main() {
 }
 
 func handleConnection(conn net.Conn) {
-	f, err := os.Open(file)
+
+	fmt.Println("connection from: ", conn.RemoteAddr())
+	frtn, err := fortune(file)
 	if err != nil {
-		fmt.Println("Error opening file: ", err)
+		fmt.Println("failed to read fortune from file")
 	}
-	defer f.Close()
 
-	reader := bufio.NewReader(f)
-
-	for {
-		//Well.. ASCII only.
-		char, err := reader.ReadByte()
-		if err != nil {
-			break
-		}
-
-		conn.Write([]byte{char})
+	for i := 0; i < len(frtn); i++ {
+		conn.Write([]byte{frtn[i]})
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 
 	conn.Close()
+}
+
+// given a path representing a fortune file, load the file, parse it,
+// an return a random fortune cookie
+func fortune(fortuneFile string) (string, error) {
+	content, err := ioutil.ReadFile(fortuneFile)
+	var fortunes []string = nil
+	if err == nil {
+		fortunes = strings.Split(string(content), "%\n")
+	}
+	rand.Seed(time.Now().UTC().UnixNano())
+	i := rand.Int() % len(fortunes)
+	return fortunes[i], err
 }
