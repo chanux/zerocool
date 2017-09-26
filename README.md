@@ -4,15 +4,15 @@
 
 ..with added fortunes angle.
 
-Build zerocool
+Build and run 
 
-    docker run -it --rm -v $PWD:/go -w="/go" -e CGO_ENABLED=0 golang:1.8 go build -o bin/zerocool -a -ldflags '-s' main.go
+    make build
 
-Build the docker image
+    build bin/zerocool_linux -f fortunes.txt -d 20 -p 1337 
 
-    docker build -t chanux/zerocool .
+Run zerocool docker container (build or just pull from docker hub)
 
-Run zerocool docker container
+    make build-docker
 
     docker run -it --rm -p 1337:1337  chanux/zerocool -f fortunes.txt -d 20 -p 1337  
 
