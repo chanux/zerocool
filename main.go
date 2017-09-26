@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"net"
 	"strings"
@@ -18,20 +19,20 @@ var (
 
 func main() {
 	flag.StringVar(&port, "p", "1337", "Port to listen on")
-	flag.StringVar(&file, "f", "example.txt", "File to serve")
+	flag.StringVar(&file, "f", "fortunes.txt", "File to serve")
 	flag.IntVar(&delay, "d", 50, "Delay between characters")
 	flag.Parse()
 
 	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
-		fmt.Println("Error listening: ", err)
+		log.Fatalf("Error starting server: %v", err)
 	}
 	defer ln.Close()
 
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
-			fmt.Println("Error handling request: ", err)
+			log.Printf("error handling request: %v", err)
 		}
 
 		go handleConnection(conn)
@@ -39,15 +40,18 @@ func main() {
 }
 
 func handleConnection(conn net.Conn) {
-
-	fmt.Println("connection from: ", conn.RemoteAddr())
+	log.Println("connection from: ", conn.RemoteAddr())
 	frtn, err := fortune(file)
 	if err != nil {
-		fmt.Println("failed to read fortune from file")
+		log.Printf("failed to read fortune: %v\n", err)
 	}
 
 	for i := 0; i < len(frtn); i++ {
-		conn.Write([]byte{frtn[i]})
+		_, err := conn.Write([]byte{frtn[i]})
+		if err != nil {
+			log.Print(err)
+			break
+		}
 		time.Sleep(time.Duration(delay) * time.Millisecond)
 	}
 
@@ -58,11 +62,11 @@ func handleConnection(conn net.Conn) {
 // an return a random fortune cookie
 func fortune(fortuneFile string) (string, error) {
 	content, err := ioutil.ReadFile(fortuneFile)
-	var fortunes []string = nil
-	if err == nil {
-		fortunes = strings.Split(string(content), "%\n")
+	if err != nil {
+		return "", fmt.Errorf("failed to read from file: %v", err)
 	}
+	fortunes := strings.Split(string(content), "%\n")
 	rand.Seed(time.Now().UTC().UnixNano())
 	i := rand.Int() % len(fortunes)
-	return fortunes[i], err
+	return fortunes[i], nil
 }
